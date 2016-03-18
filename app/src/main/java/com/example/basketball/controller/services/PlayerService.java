@@ -31,7 +31,14 @@ public interface PlayerService {
             @Header("Authorization") String Authorization,
             @Path("apuestaName") String apuestaName);
 
-   @POST("api/apuestaRealizadass")
+    @GET("api/apuestass/byleagueName/{leagueName}")
+    Call<List<Apuesta>> getApuestasByLeagueName(
+
+
+            @Header("Authorization") String Authorization,
+            @Path("leagueName") String leagueName);
+
+   @POST("api/apuestaRealizadass") // Se tiene que cambiar en un interfaz propia
     Call<ApuestaRealizada> createApuesta(
 
 

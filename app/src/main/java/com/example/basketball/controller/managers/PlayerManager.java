@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PlayerManager {
     private static PlayerManager ourInstance;
-    private List<Apuesta> apuestas,apuestas1x2;
+    private List<Apuesta> apuestas,apuestas1x2,apuestasByleagueName;
     private Retrofit retrofit;
     private Context context;
     private PlayerService playerService;
@@ -100,7 +100,7 @@ public class PlayerManager {
 
     public synchronized void createApuesta(final PlayerCallback playerCallback,ApuestaRealizada apuesta) {
         // Call<List<Apuesta>> call = playerService.getAllPlayer(UserLoginManager.getInstance(context).getBearerToken());
-        Call <ApuestaRealizada> call = playerService.createApuesta(UserLoginManager.getInstance(context).getBearerToken(),apuesta);
+        Call <ApuestaRealizada> call = playerService.createApuesta(UserLoginManager.getInstance(context).getBearerToken(), apuesta);
         call.enqueue(new Callback<ApuestaRealizada>() {
             @Override
             public void onResponse(Call<ApuestaRealizada> call, Response<ApuestaRealizada> response) {
@@ -126,7 +126,32 @@ public class PlayerManager {
         });
     }
 
+    public synchronized void getApuestasByleagueName(final PlayerCallback playerCallback,String leagueName) {
+        // Call<List<Apuesta>> call = playerService.getAllPlayer(UserLoginManager.getInstance(context).getBearerToken());
+        Call<List<Apuesta>> call = playerService.getApuestasByLeagueName(UserLoginManager.getInstance(context).getBearerToken(), leagueName);
+        call.enqueue(new Callback<List<Apuesta>>() {
+            @Override
+            public void onResponse(Call<List<Apuesta>> call, Response<List<Apuesta>> response) {
+                apuestasByleagueName = response.body();
 
+                int code = response.code();
+
+                if (code == 200 || code == 201) {
+                    playerCallback.onSuccess1(apuestasByleagueName);
+
+                } else {
+                    playerCallback.onFailure(new Throwable("ERROR" + code + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Apuesta>> call, Throwable t) {
+                Log.e("PlayerManager->", "getAllPlayers()->ERROR: " + t);
+
+                playerCallback.onFailure(t);
+            }
+        });
+    }
 
     public Apuesta getPlayer(String id) {
         for (Apuesta apuesta : apuestas) {

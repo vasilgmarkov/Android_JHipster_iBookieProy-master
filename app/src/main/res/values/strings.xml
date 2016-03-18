@@ -6,7 +6,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_username_or_password">Username or password are  incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="user_token_label">UserToken</string>
+    <string name="user_token_label">Top Football (Soccer) Leagues</string>
     <string name="access_token_label">access_token:</string>
     <string name="token_type_label">token_type:</string>
     <string name="grant_type_label">grant_type:</string>
