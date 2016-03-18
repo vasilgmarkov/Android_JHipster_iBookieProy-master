@@ -1,12 +1,16 @@
 package com.example.basketball.controller.services;
 
 import com.example.basketball.model.Apuesta;
+import com.example.basketball.model.ApuestaRealizada;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -26,5 +30,12 @@ public interface PlayerService {
 
             @Header("Authorization") String Authorization,
             @Path("apuestaName") String apuestaName);
+
+   @POST("api/apuestaRealizadass")
+    Call<ApuestaRealizada> createApuesta(
+
+
+    @Header("Authorization") String Authorization,
+    @Body ApuestaRealizada apuesta);
 
 }

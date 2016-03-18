@@ -1,9 +1,11 @@
 package com.example.basketball.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Alfredo on 28/02/2016.
  */
-public class Apuesta {
+public class Apuesta implements Serializable {
     String ligaName;
     String apuestaName;
     Double aApostarOdd;

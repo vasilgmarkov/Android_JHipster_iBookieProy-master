@@ -37,6 +37,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.basketball.controller.activities.master_detail.PlayerListActivity" />
         </activity>
+        <activity android:name=".controller.activities.master_detail.ApuestasResumeActivity"
+            android:label="Resumen De la Apuesta" />
     </application>
 
 </manifest>

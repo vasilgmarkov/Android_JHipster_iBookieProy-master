@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,14 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.basketball.R;
+import com.example.basketball.controller.activities.main.MainActivity;
 import com.example.basketball.controller.managers.PlayerManager;
 import com.example.basketball.controller.managers.UserLoginManager;
 import com.example.basketball.controller.services.PlayerService;
 import com.example.basketball.model.Apuesta;
 import com.example.basketball.util.CustomProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,9 +50,8 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
      */
     private Apuesta mItem;
     private List<Apuesta> ap1x2;
-    private Retrofit retrofit;
-    private Context context;
-    private PlayerService playerService;
+    Button home, draw, away;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -57,7 +60,6 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
 
 
     }
-
 
 
     @Override
@@ -70,7 +72,7 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
             // to load content from a content provider.
             String id = getArguments().getString(ARG_ITEM_ID);
             mItem = PlayerManager.getInstance(this.getContext()).getPlayer(id);
-           PlayerManager.getInstance(this.getContext()).getApuesta1x2(PlayerDetailFragment.this, mItem.getApuestaName());
+            PlayerManager.getInstance(this.getContext()).getApuesta1x2(PlayerDetailFragment.this, mItem.getApuestaName());
 
             assert mItem != null;
             Activity activity = this.getActivity();
@@ -79,7 +81,7 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
                 appBarLayout.setTitle(mItem.getLigaName());
                 //llamar funcion
 
-            //
+                //
             }
         }
     }
@@ -120,24 +122,63 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
                 ((TextView) rootView.findViewById(R.id.apuestaName)).setText(ap1x2.get(1).getaApostarName().toString());
                 ((Button) rootView.findViewById(R.id.homeTeam)).setText(ap1x2.get(0).getaApostarName().toString());*/
 
-        //    Intent myIntent = new Intent(this.getContext(), Apuesta.class);
-          //  startActivityForResult(myIntent, 0);
+            //    Intent myIntent = new Intent(this.getContext(), Apuesta.class);
+            //  startActivityForResult(myIntent, 0);
 
-            }
-
-            return rootView;
         }
 
-    public void setUp(List<Apuesta> bet){
+        return rootView;
+    }
 
-          ((TextView) rootView.findViewById(R.id.Draw)).setText(bet.get(0).getaApostarName().toString());
-          ((TextView) rootView.findViewById(R.id.awayTeam)).setText(bet.get(2).getaApostarName().toString());
-          ((Button) rootView.findViewById(R.id.homeTeam)).setText(bet.get(1).getaApostarName().toString());
-
-
-      }
+    public void setUp(final List<Apuesta> bet) {
 
 
+        home = ((Button) rootView.findViewById(R.id.homeTeam));
+        draw = ((Button) rootView.findViewById(R.id.Draw));
+        away = ((Button) rootView.findViewById(R.id.awayTeam));
+        home.setText(bet.get(1).getaApostarName().toString());
+        draw.setText(bet.get(2).getaApostarName().toString());
+        away.setText(bet.get(0).getaApostarName().toString());
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("apuesta", bet.get(1));
+                i.putExtras(bundle);
+
+                startActivity(i);
+            }
+        });
+
+       draw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("apuesta", bet.get(2));
+                i.putExtras(bundle);
+
+                startActivity(i);
+            }
+        });
+
+        away.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("apuesta", bet.get(0));
+                i.putExtras(bundle);
+
+                startActivity(i);
+            }
+        });
+
+
+
+    }
 
 
 }

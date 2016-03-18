@@ -102,6 +102,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
 
     @Override
     public void onFailure(Throwable t) {
+
         Intent i = new Intent(PlayerListActivity.this, LoginActivity.class);
         startActivity(i);
         finish();

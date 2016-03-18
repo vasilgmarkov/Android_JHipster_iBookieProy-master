@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.basketball.controller.activities.master_detail.PlayerCallback;
 import com.example.basketball.controller.services.PlayerService;
 import com.example.basketball.model.Apuesta;
+import com.example.basketball.model.ApuestaRealizada;
 import com.example.basketball.util.CustomProperties;
 
 import java.util.List;
@@ -90,6 +91,34 @@ public class PlayerManager {
 
             @Override
             public void onFailure(Call<List<Apuesta>> call, Throwable t) {
+                Log.e("PlayerManager->", "getAllPlayers()->ERROR: " + t);
+
+                playerCallback.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void createApuesta(final PlayerCallback playerCallback,ApuestaRealizada apuesta) {
+        // Call<List<Apuesta>> call = playerService.getAllPlayer(UserLoginManager.getInstance(context).getBearerToken());
+        Call <ApuestaRealizada> call = playerService.createApuesta(UserLoginManager.getInstance(context).getBearerToken(),apuesta);
+        call.enqueue(new Callback<ApuestaRealizada>() {
+            @Override
+            public void onResponse(Call<ApuestaRealizada> call, Response<ApuestaRealizada> response) {
+              //  apuestas1x2 = response.body();
+
+                int code = response.code();
+
+                if (code == 200 || code == 201) {
+                //    playerCallback.onSuccess1(apuestas1x2);
+                    Log.e("Apuesta->", "Realizada: OOK" + 100);
+
+                } else {
+                    playerCallback.onFailure(new Throwable("ERROR" + code + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApuestaRealizada> call, Throwable t) {
                 Log.e("PlayerManager->", "getAllPlayers()->ERROR: " + t);
 
                 playerCallback.onFailure(t);
