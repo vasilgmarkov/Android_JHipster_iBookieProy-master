@@ -40,7 +40,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
     private boolean mTwoPane;
     private RecyclerView recyclerView;
     private List<Apuesta> apuestas,ap1x2;
-
+    private String nombreLeague;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +49,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
+          nombreLeague = getIntent().getStringExtra("nombreLeague");
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -78,9 +78,28 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        if (nombreLeague==null) {
+            nombreLeague = getIntent().getStringExtra("nombreLeague");
+        }
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+            nombreLeague = getIntent().getStringExtra("nombreLeague");
+
+
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
-        PlayerManager.getInstance(this.getApplicationContext()).getAllPlayers(PlayerListActivity.this);
+
+        PlayerManager.getInstance(this.getApplicationContext()).getApuestasByleagueName(PlayerListActivity.this,nombreLeague);
 
     }
 

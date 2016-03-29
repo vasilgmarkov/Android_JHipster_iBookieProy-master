@@ -44,7 +44,7 @@ public class PlayerManager {
         return ourInstance;
     }
 
-    public synchronized void getAllPlayers(final PlayerCallback playerCallback) {
+    /*public synchronized void getAllPlayers(final PlayerCallback playerCallback) {
         Call<List<Apuesta>> call = playerService.getAllPlayer(UserLoginManager.getInstance(context).getBearerToken());
         //Call<List<Apuesta>> call1 = playerService.getApuesta1x2(UserLoginManager.getInstance(context).getBearerToken(), "Wolfsberger v Salzburg - Match Betting");
         call.enqueue(new Callback<List<Apuesta>>() {
@@ -68,7 +68,7 @@ public class PlayerManager {
                 playerCallback.onFailure(t);
             }
         });
-    }
+    }*/
     //Pol y Vasil
 
     public synchronized void getApuesta1x2(final PlayerCallback playerCallback,String nameApuesta) {
@@ -137,7 +137,7 @@ public class PlayerManager {
                 int code = response.code();
 
                 if (code == 200 || code == 201) {
-                    playerCallback.onSuccess1(apuestasByleagueName);
+                    playerCallback.onSuccess(apuestasByleagueName);
 
                 } else {
                     playerCallback.onFailure(new Throwable("ERROR" + code + ", " + response.raw().message()));
@@ -154,7 +154,7 @@ public class PlayerManager {
     }
 
     public Apuesta getPlayer(String id) {
-        for (Apuesta apuesta : apuestas) {
+        for (Apuesta apuesta : apuestasByleagueName) {
             if (apuesta.getId().toString().equals(id)) {
                 return apuesta;
             }

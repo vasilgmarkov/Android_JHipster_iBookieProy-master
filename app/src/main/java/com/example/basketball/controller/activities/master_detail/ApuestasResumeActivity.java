@@ -69,7 +69,7 @@ public class ApuestasResumeActivity extends AppCompatActivity implements PlayerC
                 apuestaRealizada.setGanadorApuesta(a.getaApostarName());
                 PlayerManager.getInstance(v.getContext()).createApuesta(ApuestasResumeActivity.this, apuestaRealizada);
                 Intent i = new Intent(v.getContext(), PlayerListActivity.class); // intent en fragments
-
+                i.putExtra("nombreLeague",a.getLigaName());
                 startActivity(i);
             }
         });
