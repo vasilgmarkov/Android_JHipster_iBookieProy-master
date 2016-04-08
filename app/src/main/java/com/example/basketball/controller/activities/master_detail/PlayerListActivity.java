@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.basketball.R;
@@ -21,6 +23,7 @@ import com.example.basketball.controller.activities.login.LoginActivity;
 import com.example.basketball.controller.managers.PlayerManager;
 import com.example.basketball.model.Apuesta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +40,9 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+    private ImageButton b1,b2;
+    FloatingActionButton fab1;
+    private LinearLayout butonees;
     private boolean mTwoPane;
     private RecyclerView recyclerView;
     private List<Apuesta> apuestas,ap1x2;
@@ -49,6 +55,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+
           nombreLeague = getIntent().getStringExtra("nombreLeague");
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -60,8 +67,26 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                butonees = (LinearLayout) findViewById(R.id.butones);
+
+               if(butonees.getVisibility() == View.VISIBLE){
+                   butonees.setVisibility(View.INVISIBLE);
+               }else{
+                   butonees.setVisibility(View.VISIBLE);
+               }
+
+                butonees.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+
+                b1 = (ImageButton) findViewById(R.id.imageButton1);
+                b1 = (ImageButton) findViewById(R.id.imageButton2);
+
             }
         });
 
@@ -99,7 +124,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
     protected void onPostResume() {
         super.onPostResume();
 
-        PlayerManager.getInstance(this.getApplicationContext()).getApuestasByleagueName(PlayerListActivity.this,nombreLeague);
+        PlayerManager.getInstance(this.getApplicationContext()).getApuestasByleagueName(PlayerListActivity.this, nombreLeague);
 
     }
 
@@ -110,7 +135,13 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
 
     @Override
     public void onSuccess(List<Apuesta> apuestaList) {
-        apuestas = apuestaList;
+        List<Apuesta> apuestaNames = new ArrayList<Apuesta>();
+        int pos = 0;
+        for (int i = 0; i<apuestaList.size();i=i+3){
+            apuestaNames.add(pos,apuestaList.get(i));
+            pos++;
+        }
+        apuestas = apuestaNames;
         setupRecyclerView(recyclerView);
     }
 
@@ -146,8 +177,8 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).getTipoDeporte().toString());
-            holder.mContentView.setText(mValues.get(position).getLigaName());
+            holder.mIdView.setText(mValues.get(position).getLigaName().toString());
+            holder.mContentView.setText(mValues.get(position).getApuestaName());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -163,11 +194,12 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, PlayerDetailActivity.class);
-                        Bundle extra = new Bundle();
-                       // extra.putString(i);
+
+                        intent.putExtra("nombreLeague", holder.mItem.getLigaName().toString());
+                        // extra.putString(i);
                         intent.putExtra(PlayerDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
-                       // intent.putExtra(PlayerDetailFragment.ARG_ITEM_ID, holder.mItem.getApuestaName().toString());
-                                 context.startActivity(intent);
+                        // intent.putExtra(PlayerDetailFragment.ARG_ITEM_ID, holder.mItem.getApuestaName().toString());
+                        context.startActivity(intent);
                     }
                 }
             });

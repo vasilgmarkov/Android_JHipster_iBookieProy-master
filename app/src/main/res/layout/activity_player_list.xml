@@ -19,6 +19,9 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
+
+
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
@@ -28,6 +31,9 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/player_list" />
+
+
+
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -36,7 +42,40 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_menu_myplaces" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:visibility="invisible"
+        android:background="#60303F9F"
+        android:layout_gravity="bottom|left"
+        android:id="@+id/butones">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton1"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="bottom" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_menu_call"
+            android:layout_gravity="bottom" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_menu_myplaces" />
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -31,7 +31,7 @@ public interface PlayerService {
             @Header("Authorization") String Authorization,
             @Path("apuestaName") String apuestaName);
 
-    @GET("api/apuestass/byleagueName/{leagueName}")
+    @GET("api/apuestass/byleagueNameMatchBetting/{leagueName}")
     Call<List<Apuesta>> getApuestasByLeagueName(
 
 

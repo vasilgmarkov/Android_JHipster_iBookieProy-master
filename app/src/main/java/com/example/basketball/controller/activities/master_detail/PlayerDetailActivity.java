@@ -19,7 +19,7 @@ import com.example.basketball.R;
  * in a {@link PlayerListActivity}.
  */
 public class PlayerDetailActivity extends AppCompatActivity {
-
+    String ligaName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,7 @@ public class PlayerDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(PlayerDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(PlayerDetailFragment.ARG_ITEM_ID));
+              ligaName = getIntent().getStringExtra("nombreLeague");
             PlayerDetailFragment fragment = new PlayerDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -75,7 +76,12 @@ public class PlayerDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            navigateUpTo(new Intent(this, PlayerListActivity.class));
+            Intent i = new Intent(this, PlayerListActivity.class); // intent en fragments
+            i.putExtra("nombreLeague",ligaName);
+           // startActivity(i);
+
+
+            navigateUpTo(i);
             return true;
         }
         return super.onOptionsItemSelected(item);

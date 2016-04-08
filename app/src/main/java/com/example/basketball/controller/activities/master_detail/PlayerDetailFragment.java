@@ -50,7 +50,8 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
      */
     private Apuesta mItem;
     private List<Apuesta> ap1x2;
-    Button home, draw, away;
+    private Button home, draw, away;
+    private TextView homeOdd,drawOdd,awayOdd;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -133,43 +134,90 @@ public class PlayerDetailFragment extends Fragment implements PlayerCallback {
     public void setUp(final List<Apuesta> bet) {
 
 
+
+        int h=0,a=0,d=0;
         home = ((Button) rootView.findViewById(R.id.homeTeam));
         draw = ((Button) rootView.findViewById(R.id.Draw));
         away = ((Button) rootView.findViewById(R.id.awayTeam));
-        home.setText(bet.get(1).getaApostarName().toString());
-        draw.setText(bet.get(2).getaApostarName().toString());
-        away.setText(bet.get(0).getaApostarName().toString());
+        homeOdd = (TextView) rootView.findViewById(R.id.homeId);
+        drawOdd = (TextView) rootView.findViewById(R.id.drawId);
+        awayOdd = (TextView) rootView.findViewById(R.id.awayId);
+        String game = bet.get(0).getApuestaName();
+        int hTeam = 0,aTeam = 0;
+        String aTeamName="", hTeamName="";
+        for (int i = 1; i < game.length(); i++) {
+            if (game.charAt(i) == 'v' && game.charAt(i+1) == ' ' && game.charAt(i-1) == ' ') {
+                hTeam = i;
+                break;
+            }
+        }
+        for (int i = 1; i < game.length(); i++) {
+            if (game.charAt(i) == '-' && game.charAt(i+1) == ' ' && game.charAt(i-1) == ' ') {
+                aTeam = i;
+                break;
+            }
+        }
 
+
+
+        hTeamName = game.substring(0 ,hTeam-1 );
+        aTeamName = game.substring(hTeam+2, aTeam-1);
+
+
+        for(int i = 0 ;i<bet.size();i++){
+
+            if(bet.get(i).getaApostarName().toString().equals(hTeamName)){
+                home.setText(bet.get(i).getaApostarName().toString());
+                homeOdd.setText(bet.get(i).getaApostarOdd().toString());
+                h=i;
+            }
+            if(bet.get(i).getaApostarName().toString().equals(aTeamName)){
+                away.setText(bet.get(i).getaApostarName().toString());
+                awayOdd.setText(bet.get(i).getaApostarOdd().toString());
+                a=i;
+            }
+            if(bet.get(i).getaApostarName().toString().equals("Draw")){
+                draw.setText(bet.get(i).getaApostarName().toString());
+                drawOdd.setText(bet.get(i).getaApostarOdd().toString());
+                d=i;
+            }
+
+        }
+
+
+        final int finalH = h;
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("apuesta", bet.get(1));
+                bundle.putSerializable("apuesta", bet.get(finalH));
                 i.putExtras(bundle);
 
                 startActivity(i);
             }
         });
 
-       draw.setOnClickListener(new View.OnClickListener() {
+        final int finalD = d;
+        draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("apuesta", bet.get(2));
+                bundle.putSerializable("apuesta", bet.get(finalD));
                 i.putExtras(bundle);
 
                 startActivity(i);
             }
         });
 
+        final int finalA = a;
         away.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), ApuestasResumeActivity.class); // intent en fragments
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("apuesta", bet.get(0));
+                bundle.putSerializable("apuesta", bet.get(finalA));
                 i.putExtras(bundle);
 
                 startActivity(i);
