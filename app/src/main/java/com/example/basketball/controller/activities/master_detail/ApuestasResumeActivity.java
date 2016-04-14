@@ -12,19 +12,23 @@ import android.widget.TextView;
 
 import com.example.basketball.R;
 import com.example.basketball.controller.managers.PlayerManager;
+import com.example.basketball.controller.managers.UserManager;
 import com.example.basketball.model.Apuesta;
 import com.example.basketball.model.ApuestaRealizada;
+import com.example.basketball.controller.activities.main.MainActivity;
+import com.example.basketball.model.User;
 
 import java.util.List;
 
 /**
  * Created by usu27 on 14/3/16.
  */
-public class ApuestasResumeActivity extends AppCompatActivity implements PlayerCallback {
+public class ApuestasResumeActivity extends AppCompatActivity implements PlayerCallback, UserCallBack {
         TextView team,cuota;
         SeekBar pasta;
         EditText pastaEdit;
         Button placeBet;
+        Integer saldo = MainActivity.userInfos.getSaldo().intValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class ApuestasResumeActivity extends AppCompatActivity implements PlayerC
 
     final Apuesta a = (Apuesta) getIntent().getSerializableExtra("apuesta");
         pasta = (SeekBar) findViewById(R.id.seekBar);
-        pasta.setMax(100);
+        pasta.setMax(saldo);
         pasta.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -62,6 +66,8 @@ public class ApuestasResumeActivity extends AppCompatActivity implements PlayerC
         placeBet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              Double  saldoActual  = saldo-Double.valueOf(String.valueOf(pastaEdit.getText()));
+                UserManager.getInstance(v.getContext()).modificarSaldoUser(ApuestasResumeActivity.this, saldoActual);
                 ApuestaRealizada apuestaRealizada = new ApuestaRealizada();
                 apuestaRealizada.setCantidadApostada(Double.valueOf(String.valueOf(pastaEdit.getText())));
                 apuestaRealizada.setCuota(a.getaApostarOdd());
@@ -83,6 +89,13 @@ public class ApuestasResumeActivity extends AppCompatActivity implements PlayerC
 
     @Override
     public void onSuccess1(List<Apuesta> apuestaList) {
+
+    }
+
+    @Override
+    public void onSuccess(User userInfo) {
+
+        MainActivity.userInfos.setSaldo(userInfo.getSaldo());
 
     }
 

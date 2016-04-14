@@ -18,27 +18,32 @@ import android.widget.Toast;
 
 import com.example.basketball.R;
 import com.example.basketball.controller.activities.master_detail.PlayerListActivity;
+import com.example.basketball.controller.activities.master_detail.UserCallBack;
 import com.example.basketball.controller.managers.UserLoginManager;
+import com.example.basketball.controller.managers.UserManager;
+import com.example.basketball.model.User;
 import com.example.basketball.model.UserToken;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
 
-    private TextView accessToken;
-    private TextView tokenType;
-    private TextView grantType;
-    private TextView refreshToken;
-    private TextView expiresIn;
-    private TextView scope;
-    private Button button;
-    ArrayList<Leagues> listLeage = new ArrayList<>();
-    private ListView leagues;
 
+public class MainActivity extends AppCompatActivity implements UserCallBack {
+        public static User userInfos;
+         private TextView accessToken;
+        private TextView saldo;
+        private TextView grantType;
+        private TextView refreshToken;
+        private TextView expiresIn;
+        private TextView scope;
+        private Button button;
+        ArrayList<Leagues> listLeage = new ArrayList<>();
+        private ListView leagues;
+        private String username;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
         /*accessToken = (TextView) findViewById(R.id.access_token);
         tokenType = (TextView) findViewById(R.id.token_type);
@@ -49,15 +54,18 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.main_button);*/
 
 
-    }
+        }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        username = getIntent().getStringExtra("userName");
+        UserManager.getInstance(this.getApplicationContext()).getUserInfo(MainActivity.this, username);
         UserToken userToken = UserLoginManager.getInstance(this.getApplicationContext()).getUserToken();
 
         if (userToken != null) {
+
+
             leagues = (ListView) findViewById(R.id.listView);
             Leagues spain = new Leagues("Spanish La Liga Primera", "espanya");
             Leagues france = new Leagues("French Ligue 1", "francia");
@@ -84,6 +92,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });*/
+    }
+
+    @Override
+    public void onSuccess(User userInfo) {
+        userInfos = userInfo;
+        saldo = (TextView) findViewById(R.id.user_token_label);
+        saldo.setText(userInfo.getSaldo().toString());
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+
     }
 
     private class Leagues {

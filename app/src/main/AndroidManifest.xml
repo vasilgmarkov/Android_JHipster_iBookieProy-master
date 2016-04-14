@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".controller.activities.master_detail.ApuestasResumeActivity"
             android:label="Resumen De la Apuesta" />
+        <activity android:name=".controller.activities.master_detail.UserDetailActivity"
+            android:label="User Info" />
     </application>
 
 </manifest>

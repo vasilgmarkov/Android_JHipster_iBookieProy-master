@@ -4,7 +4,14 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.basketball.controller.activities.login.LoginCallback;
+import com.example.basketball.controller.activities.master_detail.PlayerCallback;
+import com.example.basketball.controller.activities.master_detail.UserCallBack;
+import com.example.basketball.controller.services.UserService;
+import com.example.basketball.model.Apuesta;
+import com.example.basketball.model.User;
 import com.example.basketball.model.UserToken;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,8 +20,10 @@ import retrofit2.Response;
 public class UserLoginManager {
     private static UserLoginManager ourInstance;
     private UserToken userToken;
+    private UserService userService;
     private Context context;
     private String bearerToken;
+    List<User> user;
 
     private UserLoginManager(Context context) {
         this.context = context;
@@ -55,6 +64,12 @@ public class UserLoginManager {
             }
         });
     }
+
+
+
+
+
+
 
     public UserToken getUserToken(){
         return userToken;

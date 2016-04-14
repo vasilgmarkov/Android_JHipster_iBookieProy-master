@@ -85,7 +85,14 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
 
 
                 b1 = (ImageButton) findViewById(R.id.imageButton1);
-                b1 = (ImageButton) findViewById(R.id.imageButton2);
+                b1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(PlayerListActivity.this, UserDetailActivity.class);
+                        startActivity(i);
+                    }
+                });
+                b2 = (ImageButton) findViewById(R.id.imageButton2);
 
             }
         });

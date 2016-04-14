@@ -15,42 +15,35 @@
             android:layout_height="79dp">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
+                android:id="@+id/deportes"
+                android:background="@android:drawable/ic_menu_sort_by_size"
                 android:layout_gravity="left|top" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/textView"
-                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/textView2"
+                android:id="@+id/userName"
                 android:layout_gravity="center_vertical|bottom|right|top" />
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:id="@+id/imageView"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_myplaces"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/textView3"
-                android:layout_gravity="right|bottom" />
+                android:id="@+id/userSaldo"
+                android:layout_gravity="right|center_vertical" />
 
-            <ImageView
-                android:layout_width="67dp"
-                android:layout_height="67dp"
-                android:id="@+id/imageView"
-                android:layout_gravity="right|center_vertical"
-                android:src="@android:drawable/ic_menu_myplaces"/>
         </FrameLayout>
 
         <LinearLayout
@@ -59,14 +52,12 @@
             android:layout_height="55dp"
             android:weightSum="1">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/textView4"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.60" />
+                android:id="@+id/imageView2"
+                android:src="@android:drawable/ic_input_add"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
     </LinearLayout>

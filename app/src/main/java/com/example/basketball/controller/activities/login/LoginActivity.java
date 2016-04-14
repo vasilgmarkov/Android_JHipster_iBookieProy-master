@@ -20,20 +20,22 @@ import android.widget.TextView;
 
 import com.example.basketball.R;
 import com.example.basketball.controller.activities.main.MainActivity;
+import com.example.basketball.controller.activities.master_detail.UserCallBack;
 import com.example.basketball.controller.managers.UserLoginManager;
+import com.example.basketball.model.User;
 import com.example.basketball.model.UserToken;
 
 /**
  * A login screen that offers login via username/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoginCallback {
+public class LoginActivity extends AppCompatActivity implements LoginCallback, UserCallBack {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mEmailView.getText().toString();
+        username = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -104,11 +106,12 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
             // perform the user login attempt.
        //     showProgress(true);
             UserLoginManager.getInstance(this.getApplicationContext()).performLogin(username, password, LoginActivity.this);
+            //UserLoginManager.getInstance(this.getApplicationContext()).getUserInfo(username, LoginActivity.this);
         }
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() >= 4;
     }
 
     @Override
@@ -116,8 +119,14 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
       //  showProgress(false);
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("userName",username);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onSuccess(User userInfo) {
+
     }
 
     @Override

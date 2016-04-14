@@ -5,15 +5,20 @@ public class User {
     private String username;
     private String password;
     private UserToken userToken;
+    private Double saldo;
+    private String login;
+
 
     public User() {
     }
 
-    public User(Long id, String username, String password, UserToken userToken) {
+    public User(Long id, String username, String password, UserToken userToken, Double saldo, String login) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.userToken = userToken;
+        this.saldo = saldo;
+        this.login = login;
     }
 
     public Long getId() {
@@ -48,6 +53,22 @@ public class User {
         this.userToken = userToken;
     }
 
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,6 +99,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userToken=" + userToken +
+                ", saldo=" + saldo +
+                ", login='" + login + '\'' +
                 '}';
     }
 }
