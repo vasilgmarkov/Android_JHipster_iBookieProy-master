@@ -104,7 +104,9 @@
   </connection>
   <order>
   <hop> <from>Table input</from><to>Valor Java Script Modificado</to><enabled>Y</enabled> </hop>
-  <hop> <from>Valor Java Script Modificado</from><to>Actualizar</to><enabled>Y</enabled> </hop>
+  <hop> <from>Valor Java Script Modificado</from><to>Actualizar</to><enabled>N</enabled> </hop>
+  <hop> <from>Valor Java Script Modificado</from><to>Filtrar filas</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filtrar filas</from><to>Ejecutar script SQL</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Actualizar</name>
@@ -133,14 +135,14 @@
         <name2/>
         </key>
       <value>
-        <name>saldo</name>
-        <rename>saldo</rename>
+        <name>first_name</name>
+        <rename>pasta</rename>
         </value>
       </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>688</xloc>
-      <yloc>0</yloc>
+      <xloc>656</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -166,7 +168,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>192</xloc>
-      <yloc>64</yloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -186,10 +188,13 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#xa;&#xa;trans_Status&#x3d;CONTINUE_TRANSFORMATION&#x3b;&#xa;&#x2f;&#x2f;var roW &#x3d; row.searchValueIndex&#x28;&#x22;saldo&#x22;&#x29;&#x3b;&#xa;var evAp &#x3d; String&#x28;evento_apostado.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var ev &#x3d; String&#x28;evento.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var resAp &#x3d; String&#x28;ganador_apuesta.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var res &#x3d; String&#x28;ganador.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var cerrar &#x3d; false&#x3b;&#xa;var winner &#x3d; &#x22;&#x22;&#x3b;&#xa;var ganancia &#x3d; ganancia&#x3b;&#xa;&#x2f;&#x2f;var LIU &#x3d; row.getValue&#x28;roW&#x29;&#x3b;&#xa;&#xa;if &#x28;evAp &#x3d;&#x3d; ev &#x26;&#x26; estado.getBoolean&#x28;&#x29; &#x3d;&#x3d; false&#x29;&#x7b;&#xa;	&#xa;	cerrar &#x3d; true&#x3b;&#xa;&#xa;	if &#x28;resAp &#x3d;&#x3d; res &#x29;&#x7b;&#xa;	&#xa;	ganancia&#x2b;&#x3d;cuota.getNumber&#x28;&#x29; &#x2a; cantidad_apostada.getNumber&#x28;&#x29;&#x3b;&#xa;	saldo.setValue&#x28;saldo.getNumber&#x28;&#x29;&#x2b;ganancia&#x29;&#x3b;&#xa;	&#xa;	&#x7d;else&#x7b;&#xa;		trans_Status&#x3d;SKIP_TRANSFORMATION&#x3b;&#xa;&#xa;		&#x7d;&#xa;&#xa;&#xa;&#xa;&#xa;&#x7d;&#xa;&#xa;</jsScript_script>
+        <jsScript_script>&#xa;&#xa;trans_Status&#x3d;CONTINUE_TRANSFORMATION&#x3b;&#xa;&#x2f;&#x2f;var roW &#x3d; row.searchValueIndex&#x28;&#x22;saldo&#x22;&#x29;&#x3b;&#xa;var evAp &#x3d; String&#x28;evento_apostado.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var ev &#x3d; String&#x28;evento.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var resAp &#x3d; String&#x28;ganador_apuesta.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var res &#x3d; String&#x28;ganador.getString&#x28;&#x29;&#x29;&#x3b;&#xa;var cerrar &#x3d; false&#x3b;&#xa;var winner &#x3d; 0&#x3b;&#xa;var laGanancia &#x3d; ganancia&#x3b;&#xa;&#x2f;&#x2f;var LIU &#x3d; row.getValue&#x28;roW&#x29;&#x3b;&#xa;&#xa;if &#x28;evAp &#x3d;&#x3d; ev &#x26;&#x26; estado.getBoolean&#x28;&#x29; &#x3d;&#x3d; false&#x29;&#x7b;&#xa;	&#xa;	cerrar &#x3d; true&#x3b;&#xa;&#xa;	if &#x28;resAp &#x3d;&#x3d; res &#x29;&#x7b;&#xa;			var idU &#x3d; id.getInteger&#x28;&#x29;&#x3b;&#xa;			var gananciaUser &#x3d; cuota.getNumber&#x28;&#x29;&#x2a;cantidad_apostada.getNumber&#x28;&#x29;&#x3b;	&#xa;			var total &#x3d; ganancia&#x5b;idU&#x5d;&#x3b;	&#xa;&#xa;			if&#x28;total&#x3d;&#x3d;null&#x29;&#x7b;&#xa;&#xa;&#xa;			total&#x3d;0&#x3b;&#xa;			&#xa;			&#xa;		&#x7d;&#xa;			&#x2f;&#x2f;Alert&#x28;total&#x29;&#x3b;&#xa;		&#xa;			laGanancia&#x5b;idU&#x5d; &#x3d; total&#x2b;parseInt&#x28;gananciaUser&#x29;&#x3b;&#xa;			winner &#x3d; &#x28;total&#x2b;parseInt&#x28;gananciaUser&#x29;&#x29;&#x2b;saldo.getNumber&#x28;&#x29;&#x3b;&#xa;			for&#x28;pasta in ganancia&#x29;&#x7b;&#xa;&#xa;			&#x2f;&#x2f;Alert&#x28;pasta&#x29;&#x3b;	&#xa;		&#xa;			&#x7d;&#xa;&#xa;		&#xa;	&#xa;	&#x7d;else&#x7b;&#xa;		trans_Status&#x3d;SKIP_TRANSFORMATION&#x3b;&#xa;&#xa;		&#x7d;&#xa;&#xa;&#x2f;&#x2f;Alert&#x28;ganancia&#x5b;id.getInteger&#x28;&#x29;&#x5d;&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#xa;&#xa;</jsScript_script>
       </jsScript>      <jsScript>        <jsScript_type>1</jsScript_type>
         <jsScript_name>Item_0</jsScript_name>
-        <jsScript_script>var ganancia &#x3d; 0&#x3b;&#xa;&#xa;&#xa;</jsScript_script>
+        <jsScript_script>var ganancia &#x3d; new Array&#x28;&#x29;&#x3b;&#xa;&#xa;</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>2</jsScript_type>
+        <jsScript_name>Item_1</jsScript_name>
+        <jsScript_script>for&#x28;pasta in laGanancia&#x29;&#x7b;&#xa;&#xa;			&#xa;			&#x7d;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>evAp</name>
         <rename>evAp</rename>
         <type>String</type>
@@ -222,26 +227,95 @@
         <replace>N</replace>
       </field>      <field>        <name>winner</name>
         <rename>winner</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>ganancia</name>
-        <rename>ganancia</rename>
         <type>Number</type>
         <length>16</length>
         <precision>2</precision>
         <replace>N</replace>
-      </field>      <field>        <name>saldoActual</name>
-        <rename>saldoActual</rename>
+      </field>      <field>        <name>laGanancia</name>
+        <rename>laGanancia</rename>
         <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>idU</name>
+        <rename>idU</rename>
+        <type>Number</type>
+        <length>16</length>
+        <precision>2</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>gananciaUser</name>
+        <rename>gananciaUser</rename>
+        <type>Number</type>
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>432</xloc>
-      <yloc>48</yloc>
+      <xloc>336</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Ejecutar script SQL</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>iBookiOauth2</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>UPDATE jhi_user SET saldo &#x3d; &#x3f; where id&#x3d;&#x3f;&#x3b;</sql>
+    <set_params>Y</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>winner</name></argument>
+       <argument><name>idU</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>528</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filtrar filas</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to/>
+<send_false_to>Ejecutar script SQL</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>laGanancia</leftvalue>
+ <function>IS NULL</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

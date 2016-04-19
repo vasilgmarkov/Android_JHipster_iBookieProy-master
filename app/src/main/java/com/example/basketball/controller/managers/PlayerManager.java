@@ -109,7 +109,7 @@ public class PlayerManager {
                 int code = response.code();
 
                 if (code == 200 || code == 201) {
-                //    playerCallback.onSuccess1(apuestas1x2);
+                    //playerCallback.onSuccess1(apuestas1x2);
                     Log.e("Apuesta->", "Realizada: OOK" + 100);
 
                 } else {

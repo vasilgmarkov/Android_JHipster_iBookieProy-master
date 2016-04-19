@@ -8,6 +8,7 @@ public class ApuestaRealizada {
             private Double  cuota;
             private String eventoApostado;
             private String ganadorApuesta;
+            private Boolean estado;
 
     public ApuestaRealizada() {
     }
@@ -17,6 +18,7 @@ public class ApuestaRealizada {
         this.cuota = cuota;
         this.eventoApostado = eventoApostado;
         this.ganadorApuesta = ganadorApuesta;
+        this.estado=false;
     }
 
     public Double getCantidadApostada() {
@@ -49,6 +51,14 @@ public class ApuestaRealizada {
 
     public void setGanadorApuesta(String ganadorApuesta) {
         this.ganadorApuesta = ganadorApuesta;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override
